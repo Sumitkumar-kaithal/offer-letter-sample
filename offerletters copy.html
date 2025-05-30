@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Offer Letters</title>
+</head>
+<body class="bg-white p-8 font-sans text-gray-900">
+
+  <div class="max-w-2xl mx-auto border border-gray-300 rounded-lg p-6 shadow-sm">
+    <h1 class="text-3xl font-extrabold text-center mb-6 border-b pb-2">Create Offer Letter</h1>
+
+    <form id="offerForm" class="space-y-4">
+      <div>
+        <label class="block font-semibold mb-1" for="companyNameInput">Company Name</label>
+        <input type="text" id="companyNameInput" class="w-full border-b-2 border-gray-400 focus:border-blue-600 outline-none py-1" required />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1" for="logoUpload">Upload Company Logo</label>
+        <input type="file" id="logoUpload" accept="image/*" class="w-full" required />
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold mb-1" for="employeeNameInput">Employee Name</label>
+          <input type="text" id="employeeNameInput" class="w-full border-b-2 border-gray-400 focus:border-blue-600 outline-none py-1" required />
+        </div>
+        <div>
+          <label class="block font-semibold mb-1" for="mobno">Mobile Number</label>
+          <input type="tel" id="mobno" maxlength="10" class="w-full border-b-2 border-gray-400 focus:border-blue-600 outline-none py-1" required oninput="this.value=this.value.slice(0,10)" />
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1" for="emailid">Email ID</label>
+        <input type="email" id="emailid" class="w-full border-b-2 border-gray-400 focus:border-blue-600 outline-none py-1" required />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1" for="address">Employee Address</label>
+        <input type="text" id="address" class="w-full border-b-2 border-gray-400 focus:border-blue-600 outline-none py-1" required />
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold mb-1" for="jobTitleInput">Job Title</label>
+          <input type="text" id="jobTitleInput" class="w-full border-b-2 border-gray-400 focus:border-blue-600 outline-none py-1" required />
+        </div>
+        <div>
+          <label class="block font-semibold mb-1" for="salaryInput">Annual Salary (₹)</label>
+          <input type="number" id="salaryInput" class="w-full border-b-2 border-gray-400 focus:border-blue-600 outline-none py-1" required />
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1" for="joiningPeriodInput">Joining Period (From - To)</label>
+        <input type="text" id="joiningPeriodInput" placeholder="2025-06-01 to 2026-05-31" class="w-full border-b-2 border-gray-400 focus:border-blue-600 outline-none py-1" required />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1" for="jobLocationInput">Job Location</label>
+        <input type="text" id="jobLocationInput" class="w-full border-b-2 border-gray-400 focus:border-blue-600 outline-none py-1" required />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1" for="terminationPolicyInput">Terms & Conditions</label>
+        <textarea id="terminationPolicyInput" rows="3" class="w-full border-b-2 border-gray-400 focus:border-blue-600 outline-none py-1" required></textarea>
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1" for="fileUpload">Upload Employee Photo</label>
+        <input type="file" id="fileUpload" accept="image/*" class="w-full" required />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1" for="letters">Choose Letter Type</label>
+        <select id="letters" name="letters" class="w-full border rounded p-2" onchange="showLetterTemplate()">
+          <option value="">-- Select Letter --</option>
+          <option value="letter1">Letter 1</option>
+          <option value="letter2">Letter 2</option>
+          <option value="letter3">Letter 3</option>
+          <option value="letter4">Letter 4</option>
+        </select>
+      </div>
+
+      <button type="button" onclick="generateOfferLetter()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+        Generate Offer Letter
+      </button>
+    </form>
+  </div>
+
+
+
+  <!-- // Offer letters Output -->
+
+  
+
+  <!-- Offer letter 1  -->
+
+  <div id="letter1" class="max-w-3xl mx-auto mt-10 border border-gray-300 rounded-lg p-8 bg-white shadow-lg hidden">
+    <header class="flex justify-between items-center mb-8 border-b border-gray-300 pb-4">
+      <div>
+        <h1 id="generatedCompanyName1" class="text-3xl font-extrabold text-gray-900"></h1>
+        <p class="text-sm text-gray-600 mt-1"><strong>Date:</strong> <span id="generatedDate1"></span></p>
+      </div>
+      <img id="logoPreview1" alt="Company Logo" class="h-20 object-contain" />
+    </header>
+    <h1 class="text-3xl font-extrabold text-center mb-6 border-b pb-2">Offer Letter</h1>
+
+    <section class="flex items-center mb-8 gap-6">
+      <div class="flex-grow text-gray-800">
+        <p>To,</p>
+        <p id="outName1" class="mt-2 text-xl font-semibold"></p>
+        <p id="outAddress1" class="mt-1 text-gray-600 max-w-lg"></p>
+      </div>
+      <img id="photoPreview1" alt="Employee Photo" class="h-32 w-32 rounded-lg border border-gray-300 shadow-md object-cover" />
+    </section>
+
+    <p class="mb-6 text-lg text-gray-800">Dear <span id="outNameAgain1" class="font-semibold"></span>,</p>
+
+    <p class="mb-6 text-gray-700 leading-relaxed text-justify">
+      We are pleased to offer you the position of <strong class="text-blue-700"><span id="dynamicJobTitle1"></span></strong> at <span id="outCompanyName1" class="font-semibold"></span> with an annual salary of <strong>₹<span id="outSalary1"></span></strong>.
+    </p>
+
+    <p class="mb-6 text-gray-700 leading-relaxed text-justify">
+      You are expected to join the company during the period <strong><span id="outJoiningPeriod1"></span></strong>. If you do not join within this time frame, we will assume that you are no longer interested in this opportunity.
+    </p>
+
+    <p class="mb-6 text-gray-700 leading-relaxed">
+      <strong>Job Location:</strong> <span id="outJobLocation1"></span>
+    </p>
+
+    <div class="mb-8 bg-gray-50 p-4 rounded border border-gray-200 shadow-inner">
+      <h2 class="font-semibold mb-2 text-gray-900 text-lg">Terms & Conditions:</h2>
+      <p id="outTerminationPolicy1" class="text-gray-700 whitespace-pre-line"></p>
+    </div>
+
+    <footer class="text-gray-900 font-semibold">
+      Regards,<br />
+      HR Team<br />
+      <span id="outCompanyNameAgain1"></span>
+    </footer>
+  </div>
+
+
+
+  <!-- Offer letter 2  -->
+
+  <div id="letter2" class="max-w-3xl mx-auto mt-10 border border-gray-300 rounded-lg p-8 bg-white shadow-lg hidden">
+    <header class="flex justify-between items-center mb-8 border-b border-gray-300 pb-4">
+      <div>
+        <h1 id="generatedCompanyName2" class="text-4xl font-extrabold text-indigo-900 tracking-tight"></h1>
+        <p class="text-sm text-gray-500 mt-1"><strong>Date:</strong> <span id="generatedDate2"></span></p>
+      </div>
+      <img id="logoPreview2" alt="Company Logo" class="h-20 w-40 object-contain" />
+    </header>
+    <h1 class="text-3xl font-extrabold text-center mb-6 border-b pb-2">Offer Letter</h1>
+
+    <section class="flex items-center mb-10 gap-8 border-b border-gray-200 pb-6">
+      <div class="flex-grow text-gray-900">
+        <p class="text-lg font-semibold">To,</p>
+        <p id="outName2" class="mt-2 text-2xl font-bold tracking-wide"></p>
+        <p id="outAddress2" class="mt-1 text-gray-600 max-w-xl leading-relaxed whitespace-pre-line"></p>
+      </div>
+      <img id="photoPreview2" alt="Employee Photo" class="h-36 w-36 rounded-xl border-4 border-indigo-600 shadow-lg object-cover" />
+    </section>
+
+    <p class="mb-6 text-xl text-gray-900 font-semibold">
+      Dear <span id="outNameAgain2" class="text-indigo-700"></span>,
+    </p>
+
+    <p class="mb-6 text-gray-700 leading-relaxed text-justify indent-8">
+      We are pleased to offer you the position of <strong class="text-indigo-800 underline decoration-indigo-400 decoration-2"><span id="dynamicJobTitle2"></span></strong> at <span id="outCompanyName2" class="font-semibold text-indigo-900"></span> with an annual salary of <strong>₹<span id="outSalary2"></span></strong>.
+    </p>
+
+    <p class="mb-6 text-gray-700 leading-relaxed text-justify indent-8">
+      Your joining period is from <strong><span id="outJoiningPeriod2"></span></strong>. Please ensure you join within this timeframe.
+    </p>
+
+    <p class="mb-6 text-gray-700 leading-relaxed indent-8">
+      <strong>Job Location:</strong> <span id="outJobLocation2"></span>
+    </p>
+
+    <div class="mb-10 bg-indigo-50 p-6 rounded-lg border border-indigo-200 shadow-inner">
+      <h2 class="font-semibold mb-3 text-indigo-900 text-xl">Terms & Conditions:</h2>
+      <p id="outTerminationPolicy2" class="text-indigo-800 whitespace-pre-line leading-relaxed"></p>
+    </div>
+
+    <footer class="text-indigo-900 font-semibold text-lg border-t border-gray-300 pt-6">
+      Regards,<br />
+      HR Team<br />
+      <span id="outCompanyNameAgain2"></span>
+    </footer>
+  </div>
+
+
+
+  <!-- Offer letter 3  -->
+
+  <div id="letter3" class="max-w-2xl mx-auto mt-10 border border-gray-300 rounded-lg p-8 shadow-sm hidden">
+    <div class="flex justify-between items-center mb-5">
+      <h1 id="generatedCompanyName3" class="text-xl font-bold"></h1>
+      <img id="logoPreview3" alt="Company Logo" class="h-12" />
+    </div>
+    <p class="text-right text-sm mb-4"><strong>Date:</strong> <span id="generatedDate3"></span></p>
+    <h2 class="text-center text-2xl font-semibold border-b pb-2 mb-6">Offer Letter</h2>
+
+    <div class="flex justify-between mb-6">
+      <div>
+        <p>To,</p>
+        <p><strong><span id="outName3"></span></strong><br><span id="outAddress3"></span></p>
+      </div>
+      <img id="photoPreview3" alt="Employee Photo" class="h-28 w-28 rounded-lg object-cover border border-gray-400" />
+    </div>
+
+    <p>Dear <strong><span id="outNameAgain3"></span></strong>,</p>
+
+    <p class="mb-4">
+      We are delighted to offer you the position of <strong><span id="dynamicJobTitle3"></span></strong> at <strong><span id="outCompanyName3"></span></strong>. Your annual salary will be ₹<strong><span id="outSalary3"></span></strong>.
+    </p>
+
+    <p class="mb-4">
+      Your joining period is from <strong><span id="outJoiningPeriod3"></span></strong>. Kindly ensure to join within this period.
+    </p>
+
+    <p class="mb-4">
+      <strong>Job Location:</strong> <span id="outJobLocation3"></span>
+    </p>
+
+    <div class="bg-gray-100 p-4 rounded border border-gray-300 mb-6">
+      <h3 class="font-semibold mb-2">Terms & Conditions</h3>
+      <p id="outTerminationPolicy3" class="whitespace-pre-line"></p>
+    </div>
+
+    <p>Regards,<br><strong>HR Team</strong><br><span id="outCompanyNameAgain3"></span></p>
+  </div>
+
+
+
+  <!-- Offer letter 4  -->
+
+  <div id="letter4" class="max-w-3xl mx-auto mt-10 border border-gray-300 rounded-lg p-10 bg-gray-50 shadow-md hidden">
+    <div class="flex justify-between mb-6">
+      <img id="logoPreview4" alt="Company Logo" class="h-20 object-contain" />
+      <div>
+        <h1 id="generatedCompanyName4" class="text-left text-2xl font-extrabold text-gray-800"></h1>
+        <p class="text-sm text-gray-600 text-left mt-1"><strong>Date:</strong> <span id="generatedDate4"></span></p>
+      </div>
+    </div>
+    <h1 class="text-3xl font-extrabold text-center mb-6 border-b pb-2">Offer Letter</h1>
+
+    <div class="mb-8 border-b border-gray-300 pb-6">
+      <p>To,<br>
+      <span id="outName4" class="text-2xl font-semibold"></span><br>
+      <span id="outAddress4" class="text-gray-700"></span></p>
+    </div>
+
+    <p class="mb-6 text-xl leading-relaxed">
+      Dear <strong><span id="outNameAgain4"></span></strong>,
+    </p>
+
+    <p class="mb-6 text-gray-800 leading-relaxed">
+      We are thrilled to offer you the role of <strong class="text-green-700"><span id="dynamicJobTitle4"></span></strong> at <span id="outCompanyName4" class="font-bold"></span>. Your annual compensation will be ₹<strong><span id="outSalary4"></span></strong>.
+    </p>
+
+    <p class="mb-6 text-gray-700 leading-relaxed">
+      Your joining period will be from <strong><span id="outJoiningPeriod4"></span></strong>. Please make sure to join during this period.
+    </p>
+
+    <p class="mb-6">
+      <strong>Job Location:</strong> <span id="outJobLocation4"></span>
+    </p>
+
+    <div class="bg-green-50 p-5 rounded border border-green-300 mb-8">
+      <h2 class="font-semibold mb-2 text-green-800">Terms & Conditions:</h2>
+      <p id="outTerminationPolicy4" class="whitespace-pre-line"></p>
+    </div>
+
+    <footer class="text-gray-900 font-semibold">
+      Best Regards,<br>
+      HR Team<br>
+      <span id="outCompanyNameAgain4"></span>
+    </footer>
+  </div>
+
+  <script>
+    const logoInput = document.getElementById("logoUpload");
+    const photoInput = document.getElementById("fileUpload");
+
+    // Store uploaded images as data URLs to use in all letter templates
+    let logoDataURL = "";
+    let photoDataURL = "";
+
+    logoInput.addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          logoDataURL = e.target.result;
+          updateLogos();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    photoInput.addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          photoDataURL = e.target.result;
+          updatePhotos();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function updateLogos() {
+      ["logoPreview1", "logoPreview2", "logoPreview3", "logoPreview4"].forEach(id => {
+        document.getElementById(id).src = logoDataURL;
+      });
+    }
+
+    function updatePhotos() {
+      ["photoPreview1", "photoPreview2", "photoPreview3", "photoPreview4"].forEach(id => {
+        document.getElementById(id).src = photoDataURL;
+      });
+    }
+
+    function populateWithDemoContent(letterNum) {
+      const companyNameDemo = "DemoTech Solutions Pvt. Ltd.";
+      const employeeNameDemo = "John Doe";
+      const addressDemo = "123 Demo Street, Demo City, Demo State - 123456";
+      const jobTitleDemo = "Software Engineer";
+      const salaryDemo = "8,00,000";
+      const joiningPeriodDemo = "2025-07-15 to 2025-07-30";
+      const jobLocationDemo = "Remote (Demo Location)";
+      const terminationPolicyDemo = "This is a demo termination policy. Actual terms and conditions will apply upon formal acceptance of the offer. This includes a standard 30-day notice period for resignation by either party.";
+      const dateDemo = "May 30, 2025";
+
+      document.getElementById(`generatedCompanyName${letterNum}`).textContent = companyNameDemo;
+      document.getElementById(`outCompanyName${letterNum}`).textContent = companyNameDemo;
+      document.getElementById(`outCompanyNameAgain${letterNum}`).textContent = companyNameDemo;
+      document.getElementById(`outName${letterNum}`).textContent = employeeNameDemo;
+      document.getElementById(`outNameAgain${letterNum}`).textContent = employeeNameDemo;
+      document.getElementById(`outAddress${letterNum}`).textContent = addressDemo;
+      document.getElementById(`dynamicJobTitle${letterNum}`).textContent = jobTitleDemo;
+      document.getElementById(`outSalary${letterNum}`).textContent = salaryDemo;
+      document.getElementById(`outJoiningPeriod${letterNum}`).textContent = joiningPeriodDemo;
+      document.getElementById(`outJobLocation${letterNum}`).textContent = jobLocationDemo;
+      document.getElementById(`outTerminationPolicy${letterNum}`).textContent = terminationPolicyDemo;
+      document.getElementById(`generatedDate${letterNum}`).textContent = dateDemo;
+
+      // Make sure images are cleared or set to a placeholder if no actual image is uploaded
+      if (!logoDataURL) {
+        document.getElementById(`logoPreview${letterNum}`).src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="; // Transparent GIF
+      }
+      if (!photoDataURL) {
+        document.getElementById(`photoPreview${letterNum}`).src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="; // Transparent GIF
+      }
+    }
+
+    function showLetterTemplate() {
+      const selected = document.getElementById("letters").value;
+      
+      // Hide all letters first
+      ["letter1", "letter2", "letter3", "letter4"].forEach(id => {
+        document.getElementById(id).classList.add("hidden");
+      });
+
+      if (selected) {
+        // Show the selected letter
+        document.getElementById(selected).classList.remove("hidden");
+        const letterNum = selected.replace('letter', '');
+        populateWithDemoContent(letterNum); // Populate with demo content
+        updateLogos(); // Ensure uploaded logo is shown if available
+        updatePhotos(); // Ensure uploaded photo is shown if available
+        document.getElementById(selected).scrollIntoView({behavior: "smooth"});
+
+        // If actual data is already filled, generate it immediately
+        const companyName = document.getElementById("companyNameInput").value.trim();
+        if (companyName) { // Simple check, could be more robust
+            generateOfferLetter();
+        }
+      }
+    }
+
+    function generateOfferLetter() {
+      // Get form values
+      const companyName = document.getElementById("companyNameInput").value.trim();
+      const employeeName = document.getElementById("employeeNameInput").value.trim();
+      const mobileNumber = document.getElementById("mobno").value.trim();
+      const emailId = document.getElementById("emailid").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const jobTitle = document.getElementById("jobTitleInput").value.trim();
+      const salary = document.getElementById("salaryInput").value.trim();
+      const joiningPeriod = document.getElementById("joiningPeriodInput").value.trim();
+      const jobLocation = document.getElementById("jobLocationInput").value.trim();
+      const terminationPolicy = document.getElementById("terminationPolicyInput").value.trim();
+      const dateString = new Date().toLocaleDateString();
+
+      // Basic validation for required fields
+      if (!companyName || !employeeName || !mobileNumber || !emailId || !address || !jobTitle || !salary || !joiningPeriod || !jobLocation || !terminationPolicy || !logoDataURL || !photoDataURL) {
+        alert("Please fill all fields and upload images.");
+        return;
+      }
+
+      // Populate data in all letter templates
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`generatedCompanyName${i}`).textContent = companyName;
+        document.getElementById(`outCompanyName${i}`).textContent = companyName;
+        document.getElementById(`outCompanyNameAgain${i}`).textContent = companyName;
+        document.getElementById(`outName${i}`).textContent = employeeName;
+        document.getElementById(`outNameAgain${i}`).textContent = employeeName;
+        document.getElementById(`outAddress${i}`).textContent = address;
+        document.getElementById(`dynamicJobTitle${i}`).textContent = jobTitle;
+        document.getElementById(`outSalary${i}`).textContent = salary;
+        document.getElementById(`outJoiningPeriod${i}`).textContent = joiningPeriod;
+        document.getElementById(`outJobLocation${i}`).textContent = jobLocation;
+        document.getElementById(`outTerminationPolicy${i}`).textContent = terminationPolicy;
+        document.getElementById(`generatedDate${i}`).textContent = dateString;
+      }
+
+      updateLogos(); // Ensure uploaded logo is shown
+      updatePhotos(); // Ensure uploaded photo is shown
+
+      // Show selected letter or alert if none is selected
+      const selectedLetter = document.getElementById("letters").value;
+      if (!selectedLetter) {
+        alert("Please select a letter type from dropdown.");
+        return;
+      }
+
+      // Hide all letters then show the selected one
+      ["letter1", "letter2", "letter3", "letter4"].forEach(id => {
+        document.getElementById(id).classList.add("hidden");
+      });
+      document.getElementById(selectedLetter).classList.remove("hidden");
+      
+      // Scroll to letter
+      document.getElementById(selectedLetter).scrollIntoView({behavior: "smooth"});
+    }
+  </script>
+</body>
+</html>
